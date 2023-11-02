@@ -8,10 +8,10 @@ pygame.init()
 Ancho = 800
 Alto = 500
 size = (Ancho, Alto)
+pygame.display.set_caption("Power Racing")
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
-pygame.display.set_caption("Menu Principal")
 fondo_menu = pygame.image.load("./Img/Power Racing 2.png")
 fondo_user = pygame.image.load("./Img/user_main.png")
 fondo_score = pygame.image.load("./Img/score_main.png")

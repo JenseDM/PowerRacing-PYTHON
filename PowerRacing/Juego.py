@@ -3,15 +3,16 @@ import sys
 import random
 import pygame.mask
 import pygame.mixer
-
+from button import *
 pygame.init()
 
 screen_size = pygame.display.set_mode([800, 500])
-pygame.display.set_caption("POWER RACING")
+pygame.display.set_caption("Power Racing")
 clock = pygame.time.Clock()
 
 background = pygame.image.load("./Img/Carretera.png").convert()
 background_width = background.get_width()
+fondo_gameOver = pygame.image.load("./Img/help_main.png")
 
 from Player import *
 from enemy import *
@@ -31,6 +32,28 @@ enemy_timer = 0
 aux = False
 collision_count = 0
 
+
+def GameOver():
+    #Reproducir musica
+    #StartMusic(music_help)
+    button_menu_help = Button(305,430,200,53, pygame.image.load("Buttons/back.png"),pygame.image.load("Buttons/back_on.png"),None, None)
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.MOUSEMOTION:
+                    button_menu_help.handle_hover()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                    button_menu_help.handle_click()
+
+        screen_size.fill((0, 0, 0))
+        screen_size.blit(fondo_gameOver, (0, 0))
+        button_menu_help.draw(screen_size)
+        pygame.display.flip()
+
+    pygame.quit()
+    sys.exit()
 def crash(value):
     global aux,collision_count
 
@@ -45,7 +68,8 @@ def crash(value):
 
     if collision_count >= settings.num_vidas:
         print("GAME OVER")
-        sys.exit()
+        GameOver()
+        #sys.exit()
     
 # LÓGICA DEL JUEGO
 def main_juego():
@@ -62,6 +86,7 @@ def main_juego():
                 pygame.quit()
             sound_car.play()
             player.process_event_car(event)
+            
         player.move_car()
 
         # Desplazamiento de la carretera    
@@ -81,7 +106,7 @@ def main_juego():
             enemy = enemy_car(random.randint(1, 5), lane)
             all_sprites.add(enemy)
             enemy_sprites.add(enemy)
-        
+        '''
         # Crea los huecos
         hueco_timer += 1
         if hueco_timer >= settings.time_enemy:
@@ -90,7 +115,7 @@ def main_juego():
             hueco = Hueco(lane)
             all_sprites.add(hueco)
             hueco_sprites.add(hueco)
-
+        '''
         # Mueve los enemigos
         for enemy in enemy_sprites:
             enemy.move()
@@ -119,3 +144,5 @@ def main_juego():
 
     pygame.quit()
     sys.exit()
+
+main_juego()
