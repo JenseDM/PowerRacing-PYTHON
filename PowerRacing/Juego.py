@@ -4,6 +4,7 @@ import random
 import pygame.mask
 import pygame.mixer
 from button import *
+from Main import *
 pygame.init()
 
 screen_size = pygame.display.set_mode([800, 500])
@@ -12,18 +13,18 @@ clock = pygame.time.Clock()
 
 background = pygame.image.load("./Img/Carretera.png").convert()
 background_width = background.get_width()
-fondo_gameOver = pygame.image.load("./Img/help_main.png")
+fondo_gameOver = pygame.image.load("./Img/game_over.png")
 
 from Player import *
 from enemy import *
 from settings import *
 from power import *
-
 white = (255, 255, 255)
 settings = Settings()
 player = Player()
 sound_car = pygame.mixer.Sound("./Sounds/move.mp3")
 sound_shok = pygame.mixer.Sound("./Sounds/choque.mp3")
+music_click = pygame.mixer.Sound("./Sounds/buttonClick.mp3")
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 enemy_sprites = pygame.sprite.Group()
@@ -38,7 +39,7 @@ collision_count = 0
 def GameOver():
     #Reproducir musica
     #StartMusic(music_help)
-    button_menu_help = Button(305,430,200,53, pygame.image.load("Buttons/back.png"),pygame.image.load("Buttons/back_on.png"),None, None)
+    button_menu_help = Button(305,430,200,53, pygame.image.load("Buttons/back.png"),pygame.image.load("Buttons/back_on.png"),None, music_click.play)
     running = True
     while running:
         for event in pygame.event.get():
@@ -70,6 +71,8 @@ def crash(value):
 
     if collision_count >= settings.num_vidas:
         print("GAME OVER")
+        #detener musica
+        pygame.mixer.stop()
         GameOver()
         #sys.exit()
     

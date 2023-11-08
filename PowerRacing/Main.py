@@ -37,7 +37,7 @@ def menu_user():
     StartMusic(music_user)
     fuente = getFont
     texto = ""
-    button_menu_user = Button(305,350,200,53, pygame.image.load("Buttons/ok.png"),pygame.image.load("Buttons/ok_on.png"),main_juego, music_click.play)
+    button_menu_user = Button(305,350,200,53, pygame.image.load("Buttons/ok.png"),pygame.image.load("Buttons/ok_on.png"),None, music_click.play)
     running = True
     while running:
         for event in pygame.event.get():
