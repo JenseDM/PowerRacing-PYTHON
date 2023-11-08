@@ -17,6 +17,7 @@ fondo_gameOver = pygame.image.load("./Img/help_main.png")
 from Player import *
 from enemy import *
 from settings import *
+from power import *
 
 white = (255, 255, 255)
 settings = Settings()
@@ -27,6 +28,7 @@ all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 enemy_sprites = pygame.sprite.Group()
 hueco_sprites = pygame.sprite.Group()
+power_sprites = pygame.sprite.Group()
 enemy_timer = 0
 
 aux = False
@@ -78,7 +80,7 @@ def main_juego():
     scroll = 0  # Posición vertical inicial de la carretera
     game_over = False
     enemy_timer = 0
-    hueco_timer = 0
+    power_timer = 0
 
     while not game_over:
         for event in pygame.event.get():
@@ -106,16 +108,15 @@ def main_juego():
             enemy = enemy_car(random.randint(1, 5), lane)
             all_sprites.add(enemy)
             enemy_sprites.add(enemy)
-        '''
-        # Crea los huecos
-        hueco_timer += 1
-        if hueco_timer >= settings.time_enemy:
-            hueco_timer = 0
-            lane = random.choice([settings.carril_5, settings.carril_6])
-            hueco = Hueco(lane)
-            all_sprites.add(hueco)
-            hueco_sprites.add(hueco)
-        '''
+        # Crea los poderes
+        power_timer += 1
+        if power_timer >= settings.time_power:
+            power_timer = 0
+            lane = random.choice([settings.carril_1, settings.carril_2, settings.carril_3, settings.carril_4])
+            power = Power(lane)
+            all_sprites.add(power)
+            power_sprites.add(power)
+
         # Mueve los enemigos
         for enemy in enemy_sprites:
             enemy.move()
