@@ -158,6 +158,7 @@ def menu_principal():
     pygame.quit()
     sys.exit()
 
-menu_principal()
+if __name__ == "__main__":
+    menu_principal()
 
     
