@@ -13,6 +13,7 @@ class Settings:
         self.car_speed = 5
 
         self.enemy_pos_y = -100
+        self.power_pos_y = -100
 
         self.carril_1 = 235
         self.carril_2 = 345
