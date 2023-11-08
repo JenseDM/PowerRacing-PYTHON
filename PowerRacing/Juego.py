@@ -145,4 +145,3 @@ def main_juego():
     pygame.quit()
     sys.exit()
 
-main_juego()
