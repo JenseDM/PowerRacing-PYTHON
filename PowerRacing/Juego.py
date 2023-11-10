@@ -4,7 +4,6 @@ import random
 import pygame.mask
 import pygame.mixer
 from button import *
-from Main import *
 pygame.init()
 
 screen_size = pygame.display.set_mode([800, 500])
@@ -19,44 +18,39 @@ from Player import *
 from enemy import *
 from settings import *
 from power import *
-white = (255, 255, 255)
-settings = Settings()
-player = Player()
-sound_car = pygame.mixer.Sound("./Sounds/move.mp3")
-sound_shok = pygame.mixer.Sound("./Sounds/choque.mp3")
-music_click = pygame.mixer.Sound("./Sounds/buttonClick.mp3")
-all_sprites = pygame.sprite.Group()
-all_sprites.add(player)
-enemy_sprites = pygame.sprite.Group()
-hueco_sprites = pygame.sprite.Group()
-power_sprites = pygame.sprite.Group()
-enemy_timer = 0
 
-aux = False
-collision_count = 0
 
+def regresar():
+    import Main  # Importar el archivo Main (sugiriendo que se encuentra en el mismo directorio)
+    Main.menu_principal()   # Regresamos al menú principal
 
 def GameOver():
-    #Reproducir musica
-    #StartMusic(music_help)
-    button_menu_help = Button(305,430,200,53, pygame.image.load("Buttons/back.png"),pygame.image.load("Buttons/back_on.png"),None, music_click.play)
+    buttons_GameOver = [
+    Button(200,440,200,53, pygame.image.load("Buttons/play.png"), pygame.image.load("Buttons/play_on.png"), main_juego, music_click.play),
+    Button(405,440,200,53, pygame.image.load("Buttons/back.png"),pygame.image.load("Buttons/back_on.png"),regresar, music_click.play)
+    ]
+    
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEMOTION:
-                    button_menu_help.handle_hover()
+                    for button in buttons_GameOver:
+                        button.handle_hover()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                    button_menu_help.handle_click()
+                    for button in buttons_GameOver:
+                        button.handle_click()
 
         screen_size.fill((0, 0, 0))
         screen_size.blit(fondo_gameOver, (0, 0))
-        button_menu_help.draw(screen_size)
+        for button in buttons_GameOver:
+            button.draw(screen_size)
         pygame.display.flip()
 
     pygame.quit()
     sys.exit()
+
 def crash(value):
     global aux,collision_count
 
@@ -79,7 +73,23 @@ def crash(value):
 # LÓGICA DEL JUEGO
 def main_juego():
     pygame.mixer.stop()
+    global fuente, white, settings, player, sound_car, sound_shok, music_click, all_sprites, enemy_sprites, hueco_sprites, power_sprites, enemy_timer, aux, collision_count
     fuente = pygame.font.SysFont("Pixel Operator", 30)
+    white = (255, 255, 255)
+    settings = Settings()
+    player = Player()
+    sound_car = pygame.mixer.Sound("./Sounds/move.mp3")
+    sound_shok = pygame.mixer.Sound("./Sounds/choque.mp3")
+    music_click = pygame.mixer.Sound("./Sounds/buttonClick.mp3")
+    all_sprites = pygame.sprite.Group()
+    all_sprites.add(player)
+    enemy_sprites = pygame.sprite.Group()
+    hueco_sprites = pygame.sprite.Group()
+    power_sprites = pygame.sprite.Group()
+    enemy_timer = 0
+    aux = False
+    collision_count = 0
+
     scroll = 0  # Posición vertical inicial de la carretera
     game_over = False
     enemy_timer = 0
@@ -123,11 +133,11 @@ def main_juego():
         # Mueve los enemigos
         for enemy in enemy_sprites:
             enemy.move()
-        
+        ''' 
         # Mueve los huecos
         for hueco in hueco_sprites:
             hueco.move()
-
+        '''
         # Colisiones
         for enemy in enemy_sprites:
             car_collision_list = pygame.sprite.spritecollide(player,enemy_sprites,False,pygame.sprite.collide_mask)
