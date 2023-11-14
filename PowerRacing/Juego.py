@@ -153,6 +153,7 @@ def main_juego():
         texto = str(settings.num_vidas-collision_count) 
         Texto1 = fuente.render(texto,False,white)
         screen_size.blit(corazon,(30,10))
+        screen_size.blit(reloj,(360,10))
         screen_size.blit(Texto1,(45,22))
         pygame.display.flip()
         clock.tick(60)
