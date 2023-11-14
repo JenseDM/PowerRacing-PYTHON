@@ -143,7 +143,6 @@ def main_juego():
         for colliding_power in power_collision_list:
             # Incrementa la vida del jugador
             settings.num_vidas += 1
-            print("Vida actual:", settings.num_vidas)
 
             
         # Colisiones
