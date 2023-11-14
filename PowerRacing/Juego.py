@@ -94,7 +94,7 @@ def main_juego():
     game_over = False
     enemy_timer = 0
     power_timer = 0
-
+    tiempo = 0  # Tiempo de juego
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -155,6 +155,10 @@ def main_juego():
         screen_size.blit(corazon,(30,10))
         screen_size.blit(reloj,(360,10))
         screen_size.blit(Texto1,(45,22))
+        screen_size.blit(Texto1,(700,10))
+        tiempo += 1 #Aumentamos enl tiempo con cada iteración
+        texto_tiempo = fuente.render("Time " + str(tiempo), False, white)   #creamos el texto del tiempo
+        screen_size.blit(texto_tiempo, (360, 10)) #Mostramos el tiempo en pantalla
         pygame.display.flip()
         clock.tick(60)
 
