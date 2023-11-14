@@ -150,13 +150,14 @@ def main_juego():
 
         # Dibuja los sprites
         all_sprites.draw(screen_size)
-        texto = "Vidas: " + str(settings.num_vidas-collision_count) 
+        texto = str(settings.num_vidas-collision_count) 
         Texto1 = fuente.render(texto,False,white)
-        screen_size.blit(Texto1,(421,10))
+        screen_size.blit(corazon,(30,10))
+        screen_size.blit(Texto1,(45,22))
         pygame.display.flip()
         clock.tick(60)
 
     pygame.quit()
     sys.exit()
 
-#main_juego()
+main_juego()

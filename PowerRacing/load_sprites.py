@@ -14,3 +14,6 @@ hueco = pygame.image.load("cars/hueco.png").convert_alpha()
 
 #PODER
 power = pygame.image.load("cars/power.png").convert_alpha()
+
+#corazon
+corazon = pygame.image.load("cars/corazon.png").convert_alpha()
