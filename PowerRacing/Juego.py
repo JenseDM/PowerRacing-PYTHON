@@ -156,15 +156,14 @@ def main_juego():
         screen_size.blit(corazon,(30,10))
         screen_size.blit(reloj,(360,10))
         screen_size.blit(Texto1,(45,22))
+        screen_size.blit(score,(650,10))
         tiempo += 1 #Aumentamos enl tiempo con cada iteración
         texto_tiempo = fuente.render( str(tiempo), False, white)   #creamos el texto del tiempo
         screen_size.blit(texto_tiempo, (410, 20)) #Mostramos el tiempo en pantalla
         if tiempo % 50 == 0:
             Puntaje += 1 #Aumentamos el puntaje cada 2 segundos
-        texto_puntaje = fuente.render("Puntaje: " + str(Puntaje), False, white)   #creamos el texto del puntaje
-        texto_tiempo = fuente.render("Time " + str(tiempo), False, white)   #creamos el texto del tiempo
-        screen_size.blit(texto_puntaje, (10, 10)) #Mostramos el puntaje en pantalla
-        screen_size.blit(texto_tiempo, (360, 10)) #Mostramos el tiempo en pantalla
+        texto_puntaje = fuente.render(str(Puntaje), False, white)   #creamos el texto del puntaje
+        screen_size.blit(texto_puntaje, (700, 20)) #Mostramos el puntaje en pantalla
         pygame.display.flip()
         clock.tick(60)
 

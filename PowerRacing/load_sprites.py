@@ -20,3 +20,6 @@ corazon = pygame.image.load("cars/corazon.png").convert_alpha()
 
 #reloj
 reloj = pygame.image.load("cars/reloj.png").convert_alpha()
+
+#score
+score = pygame.image.load("cars/score.png").convert_alpha()
