@@ -134,11 +134,18 @@ def main_juego():
         # Mueve los enemigos
         for enemy in enemy_sprites:
             enemy.move()
-        ''' 
-        # Mueve los huecos
-        for hueco in hueco_sprites:
-            hueco.move()
-        '''
+        # Mueve el poder
+        for power in power_sprites:
+            power.move()
+        
+        #Elimina los poderes al colisionar con el carro
+        power_collision_list = pygame.sprite.spritecollide(player, power_sprites, True, pygame.sprite.collide_mask)
+        for colliding_power in power_collision_list:
+            # Incrementa la vida del jugador
+            settings.num_vidas += 1
+            print("Vida actual:", settings.num_vidas)
+
+            
         # Colisiones
         for enemy in enemy_sprites:
             car_collision_list = pygame.sprite.spritecollide(player,enemy_sprites,False,pygame.sprite.collide_mask)

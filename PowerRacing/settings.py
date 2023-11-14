@@ -25,4 +25,4 @@ class Settings:
         self.num_vidas = 5
 
         self.time_enemy = 30
-        self.time_power = 500
+        self.time_power = 300
