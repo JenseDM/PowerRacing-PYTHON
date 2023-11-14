@@ -33,15 +33,15 @@ class Player(pygame.sprite.Sprite):
     
     def process_event_car(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_d:
                 self.moving_right = True
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_a:
                 self.moving_left = True
 
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_d:
                 self.moving_right = False
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_a:
                 self.moving_left = False
 
     def move_car(self):
