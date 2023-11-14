@@ -128,13 +128,13 @@ def menu_principal():
     list_buttons_principal = [
     Button(361,300,400,400, pygame.image.load("Buttons/auto.png"),pygame.image.load("Buttons/auto_on.png"),None, music_car.play),
     Button (130,15,563,70,pygame.image.load("Buttons/titulo.png"),pygame.image.load("Buttons/titulo_on.png"),None, None),
-    Button(50, 130,258,62, pygame.image.load("Buttons/play.png"), pygame.image.load("Buttons/play_on.png"), menu_user, music_click.play),
-    Button(50, 220,258,62,pygame.image.load("Buttons/score.png"), pygame.image.load("Buttons/score_on.png"), menu_score, music_click.play),
-    Button(50, 310,258,62, pygame.image.load("Buttons/help.png"), pygame.image.load("Buttons/help_on.png"), menu_help, music_click.play),
-    Button(50, 400,258,62, pygame.image.load("Buttons/exit.png"), pygame.image.load("Buttons/exit_on.png"), sys.exit, music_click.play)
+    Button(50, 130,200,62, pygame.image.load("Buttons/play.png"), pygame.image.load("Buttons/play_on.png"), menu_user, music_click.play),
+    Button(50, 220,200,62,pygame.image.load("Buttons/score.png"), pygame.image.load("Buttons/score_on.png"), menu_score, music_click.play),
+    Button(50, 310,200,62, pygame.image.load("Buttons/help.png"), pygame.image.load("Buttons/help_on.png"), menu_help, music_click.play),
+    Button(50, 400,200,62, pygame.image.load("Buttons/exit.png"), pygame.image.load("Buttons/exit_on.png"), sys.exit, music_click.play)
     ]
     button_main  = list_buttons_principal
-   
+
     #Ciclo principal del menú
     running = True
     while running:
