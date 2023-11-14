@@ -95,6 +95,7 @@ def main_juego():
     enemy_timer = 0
     power_timer = 0
     tiempo = 0  # Tiempo de juego
+    Puntaje = 0 # Puntaje del juego
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -154,7 +155,11 @@ def main_juego():
         Texto1 = fuente.render(texto,False,white)
         screen_size.blit(Texto1,(700,10))
         tiempo += 1 #Aumentamos enl tiempo con cada iteración
+        if tiempo % 50 == 0:
+            Puntaje += 1 #Aumentamos el puntaje cada 2 segundos
+        texto_puntaje = fuente.render("Puntaje: " + str(Puntaje), False, white)   #creamos el texto del puntaje
         texto_tiempo = fuente.render("Time " + str(tiempo), False, white)   #creamos el texto del tiempo
+        screen_size.blit(texto_puntaje, (10, 10)) #Mostramos el puntaje en pantalla
         screen_size.blit(texto_tiempo, (360, 10)) #Mostramos el tiempo en pantalla
         pygame.display.flip()
         clock.tick(60)
