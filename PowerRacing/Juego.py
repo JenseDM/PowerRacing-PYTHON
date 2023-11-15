@@ -18,6 +18,7 @@ from Player import *
 from enemy import *
 from settings import *
 from power import *
+from road import *
 
 
 def regresar():
@@ -85,19 +86,22 @@ def main_juego():
     white = (255, 255, 255)
     settings = Settings()
     player = Player()
+    road = Road(-500)
+    road_2 = Road(0)
     sound_car = pygame.mixer.Sound("./Sounds/move.mp3")
     sound_shok = pygame.mixer.Sound("./Sounds/choque.mp3")
     music_click = pygame.mixer.Sound("./Sounds/buttonClick.mp3")
     all_sprites = pygame.sprite.Group()
-    all_sprites.add(player)
+    all_sprites.add(player) 
     enemy_sprites = pygame.sprite.Group()
     hueco_sprites = pygame.sprite.Group()
     power_sprites = pygame.sprite.Group()
+    road_sprites = pygame.sprite.Group()
+    road_sprites.add(road)
+    road_sprites.add(road_2)
     enemy_timer = 0
     aux = False
     collision_count = 0
-
-    scroll = 0  # Posición vertical inicial de la carretera
     game_over = False
     enemy_timer = 0
     power_timer = 0
@@ -109,17 +113,10 @@ def main_juego():
                 pygame.quit()
             sound_car.play()
             player.process_event_car(event)
-            
+
         player.move_car()
-
-        # Desplazamiento de la carretera    
-        screen_size.blit(background, (0, scroll))
-        screen_size.blit(background, (0, scroll - background.get_height()))  # Copia desplazada
-
-        scroll += 5
-
-        if scroll >= background.get_height():
-            scroll = 0  # Restablece la posición cuando alcanza el tamaño de la imagen de fondo
+        road.move()
+        road_2.move()
 
         # Crea los enemigos
         enemy_timer += 1
@@ -148,8 +145,7 @@ def main_juego():
         power_collision_list = pygame.sprite.spritecollide(player, power_sprites, True, pygame.sprite.collide_mask)
         for power in power_collision_list:
             poder()
-
-            
+ 
         # Colisiones
         for enemy in enemy_sprites:
             car_collision_list = pygame.sprite.spritecollide(player,enemy_sprites,False,pygame.sprite.collide_mask)
@@ -159,16 +155,16 @@ def main_juego():
                 crash(True)
             else:
                 crash(False)
-
-        # Dibuja los sprites
-        all_sprites.draw(screen_size)
+        
+        road_sprites.draw(screen_size) # Dibuja la carretera
+        all_sprites.draw(screen_size) # Dibuja los sprites
         texto = str(settings.num_vidas-collision_count) 
         Texto1 = fuente.render(texto,False,white)
         screen_size.blit(corazon,(30,10))
         screen_size.blit(reloj,(360,10))
         screen_size.blit(Texto1,(45,22))
         screen_size.blit(score,(650,10))
-        tiempo += 1 #Aumentamos enl tiempo con cada iteración
+        tiempo += 1 #Aumentamos el tiempo con cada iteración
         texto_tiempo = fuente.render( str(tiempo), False, white)   #creamos el texto del tiempo
         screen_size.blit(texto_tiempo, (410, 20)) #Mostramos el tiempo en pantalla
         if tiempo % 50 == 0:

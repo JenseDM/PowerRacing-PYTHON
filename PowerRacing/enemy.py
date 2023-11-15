@@ -15,7 +15,7 @@ class enemy_car(pygame.sprite.Sprite):
         super().__init__()
         self.bad = bad
         self.lane = lane
-        self.enemy_speed = 10
+        #self.enemy_speed = 5
         if self.bad == 1:
             self.image = enemy_modern_blue
         elif self.bad == 2:
@@ -40,7 +40,7 @@ class enemy_car(pygame.sprite.Sprite):
         else:
             self.kill()
 
-    def colision_move(self, direction):
+    """ def colision_move(self, direction):
         if direction == 1:
             self.rect.x += self.enemy_speed
         elif direction == 2:
@@ -48,23 +48,5 @@ class enemy_car(pygame.sprite.Sprite):
         elif direction == 3:
             self.rect.x += self.enemy_speed
         elif direction == 4:
-            self.rect.x -= self.enemy_speed
+            self.rect.x -= self.enemy_speed """
 
-
-class Hueco(pygame.sprite.Sprite):
-    def __init__(self,lane):
-        super().__init__()
-        self.image = hueco
-        self.lane = lane
-        self.rect = self.image.get_rect()
-        self.image = pygame.transform.scale(self.image, (59, 47))
-        self.rect.x = self.lane
-        self.rect.y = settings.enemy_pos_y
-
-        self.mask = pygame.mask.from_surface(self.image)
-    
-    def move(self):
-        if self.rect.x < 650:
-            self.rect.y += settings.car_speed
-        else:
-            self.kill()
