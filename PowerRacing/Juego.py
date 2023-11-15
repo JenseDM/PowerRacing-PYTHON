@@ -145,7 +145,7 @@ def main_juego():
         power_collision_list = pygame.sprite.spritecollide(player, power_sprites, True, pygame.sprite.collide_mask)
         for power in power_collision_list:
             poder()
- 
+
         # Colisiones
         for enemy in enemy_sprites:
             car_collision_list = pygame.sprite.spritecollide(player,enemy_sprites,False,pygame.sprite.collide_mask)
