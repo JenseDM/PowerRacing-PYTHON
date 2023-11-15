@@ -51,6 +51,13 @@ def GameOver():
     pygame.quit()
     sys.exit()
 
+
+def poder():
+    sound_power = pygame.mixer.Sound("./Sounds/power.mp3")
+    sound_power.play()
+    settings.num_vidas += 1
+
+
 def crash(value):
     global aux,collision_count
 
@@ -138,19 +145,17 @@ def main_juego():
         for power in power_sprites:
             power.move()
         
-        #Elimina los poderes al colisionar con el carro
         power_collision_list = pygame.sprite.spritecollide(player, power_sprites, True, pygame.sprite.collide_mask)
-        for colliding_power in power_collision_list:
-            # Incrementa la vida del jugador
-            settings.num_vidas += 1
+        for power in power_collision_list:
+            poder()
 
             
         # Colisiones
         for enemy in enemy_sprites:
             car_collision_list = pygame.sprite.spritecollide(player,enemy_sprites,False,pygame.sprite.collide_mask)
             if car_collision_list:
-                for colliding_enemy in car_collision_list:
-                    colliding_enemy.colision_move(1) 
+                """ for colliding_enemy in car_collision_list:
+                    colliding_enemy.colision_move(1) """ 
                 crash(True)
             else:
                 crash(False)
