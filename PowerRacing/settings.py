@@ -7,7 +7,7 @@ class Settings:
         self.car_pos_x = 400
         self.car_pos_y = 400
 
-        self.car_speed = 5
+        self.car_speed = 8
 
         self.enemy_pos_y = -100
         self.power_pos_y = -100
@@ -21,5 +21,5 @@ class Settings:
 
         self.num_vidas = 5
 
-        self.time_enemy = 30
+        self.time_enemy = 25    #tiempo de aparicion de enemigos
         self.time_power = 300

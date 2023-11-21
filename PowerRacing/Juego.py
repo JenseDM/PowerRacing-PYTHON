@@ -19,6 +19,7 @@ from Player import *
 from enemy import *
 from settings import *
 from power import *
+
 #Funcion para capturar el nombre del usuario
 def capturar_nombre(name):
     global nombreJugador
@@ -31,8 +32,33 @@ def regresar():
 
 #Funcion para guardar el nombre del usuario y el puntaje en un archivo de texto
 def agregar_nombre():
-    with open('usuario.txt', 'a') as file:
-        file.write(nombreJugador +', '+ str(Puntaje) +'\n')
+    global Puntaje
+    nombre_encontrado = False
+    lineas_actualizadas = []
+    
+    with open('usuario.txt', 'r') as file:
+        lines = file.readlines()
+
+        for line in lines:
+            parts = line.split(', ')
+            nombre = parts[0]
+            puntaje = int(parts[1])
+            if nombre == nombreJugador:
+                nombre_encontrado = True
+                if Puntaje > puntaje:
+                    line = f"{nombreJugador}, {Puntaje}\n"
+            lineas_actualizadas.append(line.rstrip('\n'))  # Elimina el salto de línea existente
+    
+    if not nombre_encontrado:
+        lineas_actualizadas.append(f"{nombreJugador}, {Puntaje}")
+
+    with open('usuario.txt', 'w') as file:
+        file.write('\n'.join(lineas_actualizadas))  # Une todas las líneas con saltos de línea
+
+    if nombre_encontrado:
+        print("Puntaje actualizado correctamente.")
+    else:
+        print("Nuevo registro agregado.")
 
 #Funcion para mostrar el menu de game over y su funcionalidad
 def GameOver():
@@ -92,6 +118,7 @@ def crash(value):
 def main_juego():
     pygame.mixer.stop()
     global Puntaje, fuente, white, settings, player, sound_car, sound_shok, music_click, all_sprites, enemy_sprites, hueco_sprites, power_sprites, enemy_timer, aux, collision_count
+    aumento_vel = 5
     fuente = pygame.font.SysFont("Pixel Operator", 30)
     white = (255, 255, 255)
     settings = Settings()
@@ -126,11 +153,13 @@ def main_juego():
         # Desplazamiento de la carretera    
         screen_size.blit(background, (0, scroll))
         screen_size.blit(background, (0, scroll - background.get_height()))  # Copia desplazada
-        scroll += 5
+        scroll += aumento_vel  # Velocidad de desplazamiento
 
         if scroll >= background.get_height():
             scroll = 0  # Restablece la posición cuando alcanza el tamaño de la imagen de fondo
-
+            if tiempo % 200 == 0:
+                aumento_vel += 0.1  # Aumenta la velocidad de desplazamiento
+                #settings.car_speed += 0.1  # Aumenta la velocidad del jugador
         # Crea los enemigos
         enemy_timer += 1
         if enemy_timer >= settings.time_enemy:
