@@ -1,14 +1,9 @@
 import pygame 
-import sys
-import random
 import pygame.mask
-
-pygame.init()
-
 from load_sprites import *
 from pygame.sprite import *
 from settings import *
-
+pygame.init()
 settings = Settings()
 
 class Player(pygame.sprite.Sprite):

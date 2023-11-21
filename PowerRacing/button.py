@@ -1,5 +1,4 @@
 import pygame
-import sys
 
 class Button:
     def __init__(self, x, y, width, height,image,hover_image,action, hover_action):
@@ -8,7 +7,7 @@ class Button:
         self.hover_action = hover_action
         self.image = image
         self.hover_image = hover_image
-        self.hovered = False  # Nuevo atributo para rastrear el estado de hover
+        self.hovered = False  #atributo para rastrear el estado de hover
 
     def draw(self, screen):
         if self.hovered:

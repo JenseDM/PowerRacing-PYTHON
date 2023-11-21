@@ -1,6 +1,4 @@
 import pygame 
-import sys
-import random
 import pygame.mask
 
 pygame.init()

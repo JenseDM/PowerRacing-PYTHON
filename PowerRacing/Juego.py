@@ -4,8 +4,8 @@ import random
 import pygame.mask
 import pygame.mixer
 from button import *
-
 pygame.init()
+
 
 screen_size = pygame.display.set_mode([800, 500])
 pygame.display.set_caption("Power Racing")
@@ -19,23 +19,22 @@ from Player import *
 from enemy import *
 from settings import *
 from power import *
-
-
+#Funcion para capturar el nombre del usuario
 def capturar_nombre(name):
     global nombreJugador
     nombreJugador = name
     
-
+#Funcion para regresar al menu principal
 def regresar():
     import Main  # Importar el archivo Main (sugiriendo que se encuentra en el mismo directorio)
     Main.menu_principal()   # Regresamos al menú principal
 
-#Funcion para guardar el nombre del usuario
+#Funcion para guardar el nombre del usuario y el puntaje en un archivo de texto
 def agregar_nombre():
     with open('usuario.txt', 'a') as file:
         file.write(nombreJugador +', '+ str(Puntaje) +'\n')
 
-
+#Funcion para mostrar el menu de game over y su funcionalidad
 def GameOver():
     buttons_GameOver = [
     Button(200,440,200,53, pygame.image.load("Buttons/play.png"), pygame.image.load("Buttons/play_on.png"), main_juego, music_click.play),
@@ -63,13 +62,13 @@ def GameOver():
     pygame.quit()
     sys.exit()
 
-
+#Función para aplicar habilidad de aumento de salud
 def poder():
     sound_power = pygame.mixer.Sound("./Sounds/power.mp3")
     sound_power.play()
     settings.num_vidas += 1
 
-
+#Función para detectar colisiones
 def crash(value):
     global aux,collision_count
 
@@ -84,7 +83,6 @@ def crash(value):
 
     if collision_count >= settings.num_vidas:
         print("GAME OVER")
-        #detener musica
         pygame.mixer.stop()
         agregar_nombre()
         GameOver()
@@ -93,7 +91,7 @@ def crash(value):
 # LÓGICA DEL JUEGO
 def main_juego():
     pygame.mixer.stop()
-    global fuente, white, settings, player, sound_car, sound_shok, music_click, all_sprites, enemy_sprites, hueco_sprites, power_sprites, enemy_timer, aux, collision_count
+    global Puntaje, fuente, white, settings, player, sound_car, sound_shok, music_click, all_sprites, enemy_sprites, hueco_sprites, power_sprites, enemy_timer, aux, collision_count
     fuente = pygame.font.SysFont("Pixel Operator", 30)
     white = (255, 255, 255)
     settings = Settings()
@@ -109,13 +107,11 @@ def main_juego():
     enemy_timer = 0
     aux = False
     collision_count = 0
-
     scroll = 0  # Posición vertical inicial de la carretera
     game_over = False
     enemy_timer = 0
     power_timer = 0
     tiempo = 0  # Tiempo de juego
-    global Puntaje
     Puntaje = 0 # Puntaje del juego
 
     while not game_over:
@@ -126,11 +122,10 @@ def main_juego():
             player.process_event_car(event)
             
         player.move_car()
-
+        
         # Desplazamiento de la carretera    
         screen_size.blit(background, (0, scroll))
         screen_size.blit(background, (0, scroll - background.get_height()))  # Copia desplazada
-
         scroll += 5
 
         if scroll >= background.get_height():
@@ -164,7 +159,6 @@ def main_juego():
         for power in power_collision_list:
             poder()
 
-            
         # Colisiones
         for enemy in enemy_sprites:
             car_collision_list = pygame.sprite.spritecollide(player,enemy_sprites,False,pygame.sprite.collide_mask)

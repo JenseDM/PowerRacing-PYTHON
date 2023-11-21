@@ -1,6 +1,3 @@
-import pygame
-import sys
-
 #configuracion del juego
 class Settings:
     def __init__(self):

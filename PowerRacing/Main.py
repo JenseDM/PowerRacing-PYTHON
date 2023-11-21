@@ -32,6 +32,7 @@ def StartMusic(cancion):
     pygame.mixer.stop()
     cancion.play()
 
+#Ventana Usuario
 def menu_user():
     #Reproducir musica
     StartMusic(music_user)
@@ -76,6 +77,7 @@ def menu_user():
 
     pygame.quit()
     sys.exit()
+
 #Funcion para obtener el nombre del usuario
 def obtener_nombres():
     with open('usuario.txt', 'r') as file:
@@ -86,6 +88,7 @@ def borrar_nombres():
     with open('usuario.txt', 'w') as file:
         file.truncate(0)
 
+#Ventana Score
 def menu_score():
     #Reproducir musica
     StartMusic(music_score)
@@ -149,6 +152,7 @@ def menu_score():
     pygame.quit()
     sys.exit()
 
+#Ventana Help
 def menu_help():
     #Reproducir musica
     StartMusic(music_help)
@@ -171,13 +175,14 @@ def menu_help():
     pygame.quit()
     sys.exit()
 
+#Ventana Principal
 def menu_principal():
     #Reproducir musica
     StartMusic(music_menu)
     #Lista de botones del menu principal
     list_buttons_principal = [
     Button(361,300,400,400, pygame.image.load("Buttons/auto.png"),pygame.image.load("Buttons/auto_on.png"),None, music_car.play),
-    Button (130,15,563,70,pygame.image.load("Buttons/titulo.png"),pygame.image.load("Buttons/titulo_on.png"),None, None),
+    Button(130,15,563,70,pygame.image.load("Buttons/titulo.png"),pygame.image.load("Buttons/titulo_on.png"),None, None),
     Button(50, 130,200,62, pygame.image.load("Buttons/play.png"), pygame.image.load("Buttons/play_on.png"), menu_user, music_click.play),
     Button(50, 220,200,62,pygame.image.load("Buttons/score.png"), pygame.image.load("Buttons/score_on.png"), menu_score, music_click.play),
     Button(50, 310,200,62, pygame.image.load("Buttons/help.png"), pygame.image.load("Buttons/help_on.png"), menu_help, music_click.play),
@@ -209,6 +214,4 @@ def menu_principal():
     sys.exit()
 
 if __name__ == "__main__":
-    menu_principal()
-
-    
+    menu_principal()   
