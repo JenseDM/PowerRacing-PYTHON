@@ -4,6 +4,7 @@ import random
 import pygame.mask
 import pygame.mixer
 from button import *
+
 pygame.init()
 
 screen_size = pygame.display.set_mode([800, 500])
@@ -20,9 +21,20 @@ from settings import *
 from power import *
 
 
+def capturar_nombre(name):
+    global nombreJugador
+    nombreJugador = name
+    
+
 def regresar():
     import Main  # Importar el archivo Main (sugiriendo que se encuentra en el mismo directorio)
     Main.menu_principal()   # Regresamos al menú principal
+
+#Funcion para guardar el nombre del usuario
+def agregar_nombre():
+    with open('usuario.txt', 'a') as file:
+        file.write(nombreJugador +', '+ str(Puntaje) +'\n')
+
 
 def GameOver():
     buttons_GameOver = [
@@ -74,6 +86,7 @@ def crash(value):
         print("GAME OVER")
         #detener musica
         pygame.mixer.stop()
+        agregar_nombre()
         GameOver()
         #sys.exit()
     
@@ -102,7 +115,9 @@ def main_juego():
     enemy_timer = 0
     power_timer = 0
     tiempo = 0  # Tiempo de juego
+    global Puntaje
     Puntaje = 0 # Puntaje del juego
+
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
