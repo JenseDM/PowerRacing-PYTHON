@@ -31,11 +31,17 @@ def StartMusic(cancion):
     #Detener musica
     pygame.mixer.stop()
     cancion.play()
+#Funcion para guardar el nombre del usuario
+def agregar_nombre(nombre):
+    with open('usuario.txt', 'a') as file:
+        file.write(nombre + '\n')
 
 def menu_user():
     #Reproducir musica
     StartMusic(music_user)
     fuente = getFont
+    global nombreUsuario
+    nombreUsuario = ""
     texto = ""
     button_menu_user = Button(305,350,200,53, pygame.image.load("Buttons/ok.png"),pygame.image.load("Buttons/ok_on.png"),main_juego, music_click.play)
     running = True
@@ -48,12 +54,16 @@ def menu_user():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                     button_menu_user.handle_click()
                     print("Texto ingresado:", texto)
+                    nombreUsuario = texto
+                    agregar_nombre(nombreUsuario)
                     texto = ""
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     texto = texto[:-1]
                 elif event.key == pygame.K_RETURN:
                     print("Texto ingresado:", texto)
+                    nombreUsuario = texto
+                    agregar_nombre(nombreUsuario)
                     texto = ""
                     main_juego()
                 else:
@@ -70,7 +80,11 @@ def menu_user():
 
     pygame.quit()
     sys.exit()
-
+#Funcion para obtener el nombre del usuario
+def obtener_nombres():
+    with open('usuario.txt', 'r') as file:
+        return file.readlines()
+    
 def menu_score():
     #Reproducir musica
     StartMusic(music_score)
@@ -92,6 +106,26 @@ def menu_score():
 
         screen.fill((0, 0, 0))
         screen.blit(fondo_score, (0, 0))
+        # Mostrar todos los nombres de usuario
+        fuente_nombre = getFont
+        nombres = obtener_nombres()  # Obtener todos los nombres del archivo
+        y_offset = 130
+        # Mostrar título
+        title_user = fuente_nombre.render("Users", True, "white")
+        title_points = fuente_nombre.render("Points", True, "white")
+        title_rect = title_user.get_rect()
+        title_rect.center = (200, y_offset)
+        screen.blit(title_user, title_rect)
+        screen.blit(title_points, (400, y_offset))
+        y_offset += 40  # Ajustar el espacio vertical después del título
+        for nombre in nombres:
+            nombre = nombre.strip()  # Eliminar espacios en blanco y saltos de línea
+            texto_nombre = fuente_nombre.render(nombre, True, "white")
+            texto_nombre_rect = texto_nombre.get_rect()
+            texto_nombre_rect.center = (300, y_offset)
+            screen.blit(texto_nombre, texto_nombre_rect)
+            y_offset += 30  # Ajustar el espacio vertical entre los nombres
+
         for button in buttons_score:
             button.draw(screen)
         pygame.display.flip()
