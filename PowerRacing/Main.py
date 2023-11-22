@@ -127,7 +127,7 @@ def menu_score():
         nombres = obtener_nombres()  # Obtener todos los nombres del archivo
         y_offset = 200  # Ajustar la posición vertical inicial
 
-        for line in nombres:
+        for line in nombres:    # Iterar sobre cada línea
             line = line.strip()  # Eliminar espacios en blanco y saltos de línea
             nombre, puntaje = line.split(",")  # Dividir la línea en nombre y puntaje
 
@@ -145,7 +145,7 @@ def menu_score():
 
             y_offset += 30  # Ajustar el espacio vertical entre nombres y puntajes
 
-        for button in buttons_score:
+        for button in buttons_score:    # Dibujar los botones
             button.draw(screen)
         pygame.display.flip()
 
@@ -177,9 +177,7 @@ def menu_help():
 
 #Ventana Principal
 def menu_principal():
-    #Reproducir musica
-    StartMusic(music_menu)
-    #Lista de botones del menu principal
+    StartMusic(music_menu)  #Reproducir musica
     list_buttons_principal = [
     Button(361,300,400,400, pygame.image.load("Buttons/auto.png"),pygame.image.load("Buttons/auto_on.png"),None, music_car.play),
     Button(130,15,563,70,pygame.image.load("Buttons/titulo.png"),pygame.image.load("Buttons/titulo_on.png"),None, None),

@@ -17,7 +17,8 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.moving_right = False
         self.moving_left = False
-
+        self.velocidad = 4
+        
     def move_right(self, pixels):
         if self.rect.x < 550:
             self.rect.x += pixels
@@ -41,6 +42,6 @@ class Player(pygame.sprite.Sprite):
 
     def move_car(self):
         if self.moving_right:
-            self.move_right(settings.car_speed)
+            self.move_right(self.velocidad)
         if self.moving_left:
-            self.move_left(settings.car_speed)
+            self.move_left(self.velocidad)

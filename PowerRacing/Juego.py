@@ -6,7 +6,6 @@ import pygame.mixer
 from button import *
 pygame.init()
 
-
 screen_size = pygame.display.set_mode([800, 500])
 pygame.display.set_caption("Power Racing")
 clock = pygame.time.Clock()
@@ -14,6 +13,9 @@ clock = pygame.time.Clock()
 background = pygame.image.load("./Img/Carretera.png").convert()
 background_width = background.get_width()
 fondo_gameOver = pygame.image.load("./Img/game_over.png")
+
+global white
+white= (255, 255, 255)
 
 from Player import *
 from enemy import *
@@ -66,7 +68,6 @@ def GameOver():
     Button(200,440,200,53, pygame.image.load("Buttons/play.png"), pygame.image.load("Buttons/play_on.png"), main_juego, music_click.play),
     Button(405,440,200,53, pygame.image.load("Buttons/back.png"),pygame.image.load("Buttons/back_on.png"),regresar, music_click.play)
     ]
-    
     running = True
     while running:
         for event in pygame.event.get():
@@ -97,13 +98,12 @@ def poder():
 #Función para detectar colisiones
 def crash(value):
     global aux,collision_count
-
     if value == True and aux == False:
         aux = True
         collision_count += 1
         sound_shok.play()
         print("Choque:", collision_count)
-    
+
     if value == False and aux == True:
         aux = False
 
@@ -113,34 +113,31 @@ def crash(value):
         agregar_nombre()
         GameOver()
         #sys.exit()
-    
-# LÓGICA DEL JUEGO
+
+#Lógica del juego
 def main_juego():
     pygame.mixer.stop()
-    global Puntaje, fuente, white, settings, player, sound_car, sound_shok, music_click, all_sprites, enemy_sprites, hueco_sprites, power_sprites, enemy_timer, aux, collision_count
-    aumento_vel = 5
+    global scroll, nombreJugador, collision_count, tiempo, Puntaje, aumento_vel, fuente, settings, player, sound_car, sound_shok, music_click, all_sprites, enemy_sprites, hueco_sprites, power_sprites, enemy_timer, aux
     fuente = pygame.font.SysFont("Pixel Operator", 30)
-    white = (255, 255, 255)
-    settings = Settings()
-    player = Player()
     sound_car = pygame.mixer.Sound("./Sounds/move.mp3")
     sound_shok = pygame.mixer.Sound("./Sounds/choque.mp3")
     music_click = pygame.mixer.Sound("./Sounds/buttonClick.mp3")
     all_sprites = pygame.sprite.Group()
-    all_sprites.add(player)
     enemy_sprites = pygame.sprite.Group()
     hueco_sprites = pygame.sprite.Group()
     power_sprites = pygame.sprite.Group()
+    settings = Settings()
+    player = Player()
+    all_sprites.add(player)
     enemy_timer = 0
     aux = False
     collision_count = 0
-    scroll = 0  # Posición vertical inicial de la carretera
+    tiempo = 0
+    Puntaje = 0
+    aumento_vel = 5
     game_over = False
-    enemy_timer = 0
+    scroll = 0
     power_timer = 0
-    tiempo = 0  # Tiempo de juego
-    Puntaje = 0 # Puntaje del juego
-
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -157,9 +154,11 @@ def main_juego():
 
         if scroll >= background.get_height():
             scroll = 0  # Restablece la posición cuando alcanza el tamaño de la imagen de fondo
-            if tiempo % 200 == 0:
-                aumento_vel += 0.1  # Aumenta la velocidad de desplazamiento
-                #settings.car_speed += 0.1  # Aumenta la velocidad del jugador
+            if scroll <= 10: 
+                if tiempo % 300 == 0:
+                    aumento_vel += 0.1
+                    print("Velocidad de la carretera: ", scroll)
+
         # Crea los enemigos
         enemy_timer += 1
         if enemy_timer >= settings.time_enemy:

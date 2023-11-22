@@ -31,10 +31,18 @@ class enemy_car(pygame.sprite.Sprite):
         self.rect.y = settings.enemy_pos_y
 
         self.mask = pygame.mask.from_surface(self.image)
-    
+
+    def aumentar_velocidad(self):
+        from Juego import tiempo
+        if settings.car_speed <= 14:
+            if tiempo % 300 == 0:
+                settings.car_speed += 0.01
+                print("Velocidad de los autos: ", settings.car_speed)
+
     def move(self):
         if self.rect.x < 650:
             self.rect.y += settings.car_speed
+            self.aumentar_velocidad()
         else:
             self.kill()
 
@@ -48,21 +56,3 @@ class enemy_car(pygame.sprite.Sprite):
         elif direction == 4:
             self.rect.x -= self.enemy_speed
 
-
-class Hueco(pygame.sprite.Sprite):
-    def __init__(self,lane):
-        super().__init__()
-        self.image = hueco
-        self.lane = lane
-        self.rect = self.image.get_rect()
-        self.image = pygame.transform.scale(self.image, (59, 47))
-        self.rect.x = self.lane
-        self.rect.y = settings.enemy_pos_y
-
-        self.mask = pygame.mask.from_surface(self.image)
-    
-    def move(self):
-        if self.rect.x < 650:
-            self.rect.y += settings.car_speed
-        else:
-            self.kill()

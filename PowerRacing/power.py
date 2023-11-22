@@ -16,10 +16,19 @@ class Power(pygame.sprite.Sprite):
         self.rect.x = self.lane
         self.rect.y = settings.power_pos_y
         self.mask = pygame.mask.from_surface(self.image)
+        self.power_speed = settings.car_speed
+
+    def aumentar_velocidad(self):
+        from Juego import tiempo, aumento_vel
+        if aumento_vel <= 10:
+            if tiempo % 300 == 0:
+                self.power_speed += 0.1
+                print("Velocidad de la estrella: ", self.power_speed)
 
     def move(self):
         if self.rect.x < 650:
-            self.rect.y += settings.car_speed
+            self.rect.y += self.power_speed
+            self.aumentar_velocidad()
         else:
             self.kill()
 
