@@ -10,6 +10,11 @@ Alto = 500
 size = (Ancho, Alto)
 pygame.display.set_caption("Power Racing")
 screen = pygame.display.set_mode(size)
+# Tamaño del ícono deseado
+icon_size = (64, 64)  # Puedes ajustar este tamaño a tu preferencia
+icono = pygame.image.load("./Img/icono.png")
+icon = pygame.transform.scale(icono, icon_size)
+pygame.display.set_icon(icon)
 clock = pygame.time.Clock()
 
 fondo_menu = pygame.image.load("./Img/Power Racing 2.png")
