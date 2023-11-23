@@ -34,9 +34,9 @@ class enemy_car(pygame.sprite.Sprite):
 
     def aumentar_velocidad(self):
         from Juego import tiempo
-        if settings.car_speed <= 14:
-            if tiempo % 300 == 0:
-                settings.car_speed += 0.01
+        if settings.car_speed <= 10:
+            if tiempo % 1000 == 0:
+                settings.car_speed += 0.5
                 print("Velocidad de los autos: ", settings.car_speed)
 
     def move(self):

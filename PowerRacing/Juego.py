@@ -138,6 +138,7 @@ def main_juego():
     game_over = False
     scroll = 0
     power_timer = 0
+   
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -154,19 +155,29 @@ def main_juego():
 
         if scroll >= background.get_height():
             scroll = 0  # Restablece la posición cuando alcanza el tamaño de la imagen de fondo
-            if scroll <= 10: 
-                if tiempo % 300 == 0:
-                    aumento_vel += 0.1
-                    print("Velocidad de la carretera: ", scroll)
+        if aumento_vel <= 10:
+            if tiempo % 700 == 0:
+                aumento_vel += 1
+                print("Velocidad de la carretera: ", aumento_vel)
 
-        # Crea los enemigos
+         # Crea los enemigos
         enemy_timer += 1
         if enemy_timer >= settings.time_enemy:
             enemy_timer = 0
-            lane = random.choice([settings.carril_1, settings.carril_2, settings.carril_3, settings.carril_4])
-            enemy = enemy_car(random.randint(1, 5), lane)
-            all_sprites.add(enemy)
-            enemy_sprites.add(enemy)
+            # Generar una lista de carriles disponibles sin incluir el carril actual del jugador
+            available_lanes = [settings.carril_1, settings.carril_2, settings.carril_3, settings.carril_4]
+            if player.rect.x in available_lanes:
+                available_lanes.remove(player.rect.x)
+            if available_lanes:
+                # Si hay más de un carril disponible, se selecciona aleatoriamente uno
+                if len(available_lanes) > 1:
+                    lane = random.choice(available_lanes)
+                else:
+                    # Si solo queda un carril disponible, se toma ese
+                    lane = available_lanes[0]
+                enemy = enemy_car(random.randint(1, 5), lane)
+                all_sprites.add(enemy)
+                enemy_sprites.add(enemy)
         # Crea los poderes
         power_timer += 1
         if power_timer >= settings.time_power:
@@ -175,6 +186,16 @@ def main_juego():
             power = Power(lane)
             all_sprites.add(power)
             power_sprites.add(power)
+
+        # Eliminar enemigos fuera de la pantalla
+        for enemy in enemy_sprites.copy():
+            if enemy.rect.y > screen_size.get_height():
+                enemy.kill()
+            
+        # Eliminar poderes fuera de la pantalla
+        for power in power_sprites.copy():
+            if power.rect.y > screen_size.get_height():
+                power.kill()
 
         # Mueve los enemigos
         for enemy in enemy_sprites:
@@ -218,4 +239,4 @@ def main_juego():
     pygame.quit()
     sys.exit()
 
-#main_juego()
+main_juego()

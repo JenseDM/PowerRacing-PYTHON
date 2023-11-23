@@ -21,8 +21,8 @@ class Power(pygame.sprite.Sprite):
     def aumentar_velocidad(self):
         from Juego import tiempo, aumento_vel
         if aumento_vel <= 10:
-            if tiempo % 300 == 0:
-                self.power_speed += 0.1
+            if tiempo % 1000 == 0:
+                self.power_speed += 0.5
                 print("Velocidad de la estrella: ", self.power_speed)
 
     def move(self):
