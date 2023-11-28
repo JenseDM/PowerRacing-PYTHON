@@ -17,6 +17,7 @@ icon = pygame.transform.scale(icono, icon_size)
 pygame.display.set_icon(icon)
 clock = pygame.time.Clock()
 
+# El código carga imágenes y sonidos para el menú del juego.
 fondo_menu = pygame.image.load("./Img/Power Racing 2.png")
 fondo_user = pygame.image.load("./Img/user_main.png")
 fondo_score = pygame.image.load("./Img/score_main.png")
@@ -29,7 +30,7 @@ music_score = pygame.mixer.Sound("./Sounds/music_score.mp3")
 music_help = pygame.mixer.Sound("./Sounds/music_help.mp3")
 music_car = pygame.mixer.Sound("./Sounds/motionCar.mp3")
 music_click = pygame.mixer.Sound("./Sounds/buttonClick.mp3")
-getFont = pygame.font.Font(None, 40)
+getFont = pygame.font.Font(None, 40) # Fuente para el texto
 
 #Funcion para reproducir musica del carro
 def StartMusic(cancion):

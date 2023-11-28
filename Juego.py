@@ -6,6 +6,10 @@ import pygame.mixer
 from button import *
 pygame.init()
 
+# Este código configura la ventana del juego con un tamaño de 800 píxeles de ancho y 500 píxeles de alto usando el
+# Función `pygame.display.set_mode()`. También establece el título de la ventana del juego como "Power Racing".
+# usando la función `pygame.display.set_caption()`. Finalmente, crea un objeto `Reloj` a partir del
+# Clase `pygame.time.Clock()`, que se utilizará para controlar la velocidad de fotogramas del juego.
 screen_size = pygame.display.set_mode([800, 500])
 pygame.display.set_caption("Power Racing")
 clock = pygame.time.Clock()
@@ -24,6 +28,11 @@ from power import *
 
 #Funcion para capturar el nombre del usuario
 def capturar_nombre(name):
+    """
+    The function `capturar_nombre` captures and stores the name of a player.
+    
+    :param name: The parameter "name" is a string that represents the name of the player
+    """
     global nombreJugador
     nombreJugador = name
     
@@ -164,7 +173,7 @@ def main_juego():
                 aumento_vel += 0.5
                 print("Velocidad de la carretera: ", aumento_vel)
 
-         # Crea los enemigos
+        # Crea los enemigos
         enemy_timer += 1
         if enemy_timer >= settings.time_enemy:
             enemy_timer = 0
