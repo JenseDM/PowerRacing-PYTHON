@@ -1,5 +1,4 @@
 import pygame
-import sys
 
 #JUGADOR PRINCIPAL
 Player_image = pygame.image.load("cars/modern_red.png").convert_alpha()

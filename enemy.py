@@ -1,6 +1,4 @@
 import pygame 
-import sys
-import random
 import pygame.mask
 
 pygame.init()
@@ -33,10 +31,18 @@ class enemy_car(pygame.sprite.Sprite):
         self.rect.y = settings.enemy_pos_y
 
         self.mask = pygame.mask.from_surface(self.image)
-    
+
+    def aumentar_velocidad(self):
+        from Juego import tiempo
+        if settings.car_speed <= 10:
+            if tiempo % 700 == 0:
+                settings.car_speed += 0.5
+                print("Velocidad de los autos: ", settings.car_speed)
+
     def move(self):
         if self.rect.x < 650:
             self.rect.y += settings.car_speed
+            self.aumentar_velocidad()
         else:
             self.kill()
 
