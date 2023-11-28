@@ -89,19 +89,13 @@ def GameOver():
     pygame.quit()
     sys.exit()
 
-#Función para aplicar habilidad de aumento de salud
-def poder():
-    sound_power = pygame.mixer.Sound("./Sounds/power.mp3")
-    sound_power.play()
-    settings.num_vidas += 1
-
 #Función para detectar colisiones
 def crash(value):
     global aux,collision_count
     if value == True and aux == False:
         aux = True
         collision_count += 1
-        sound_shok.play()
+        sound_shok_channel.play(sound_shok)
         print("Choque:", collision_count)
 
     if value == False and aux == True:
@@ -117,10 +111,17 @@ def crash(value):
 #Lógica del juego
 def main_juego():
     pygame.mixer.stop()
-    global scroll, nombreJugador, collision_count, tiempo, Puntaje, aumento_vel, fuente, settings, player, sound_car, sound_shok, music_click, all_sprites, enemy_sprites, hueco_sprites, power_sprites, enemy_timer, aux
+    global scroll, nombreJugador, collision_count, tiempo, Puntaje, aumento_vel, fuente, settings, player, sound_car, sound_shok, sound_shok_channel, music_click, all_sprites, enemy_sprites, hueco_sprites, power_sprites, enemy_timer, aux
     fuente = pygame.font.SysFont("Pixel Operator", 30)
+    # Configura los canales de audio
+    pygame.mixer.set_num_channels(3)  # Establece dos canales de audio
     sound_car = pygame.mixer.Sound("./Sounds/move.mp3")
+    sound_car_channel = pygame.mixer.Channel(0)  # Establece el canal 0 para el sonido del carro
+    sound_car.set_volume(0.5)
     sound_shok = pygame.mixer.Sound("./Sounds/choque.mp3")
+    sound_shok_channel = pygame.mixer.Channel(1)  # Establece el canal 1 para el sonido del choque
+    sound_power = pygame.mixer.Sound("./Sounds/power.mp3")
+    sound_power_channel = pygame.mixer.Channel(2)  # Establece el canal 2 para el sonido del poder
     music_click = pygame.mixer.Sound("./Sounds/buttonClick.mp3")
     all_sprites = pygame.sprite.Group()
     enemy_sprites = pygame.sprite.Group()
@@ -138,16 +139,19 @@ def main_juego():
     game_over = False
     scroll = 0
     power_timer = 0
-   
+    invulnerable = False  # Variable para rastrear si el jugador es invulnerable
+    invulnerable_timer = 0  # Temporizador para controlar la duración de la invulnerabilidad
+    INVULNERABLE_DURATION = 30  # Duración en frames (0.5 segundos a 60 FPS)
+    sound_car_channel.play(sound_car, loops=-1)  # Reproduce el sonido del carro en un bucle infinito
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            sound_car.play()
+        
             player.process_event_car(event)
             
         player.move_car()
-        
+        #sound_car_channel.play(sound_car, loops=-1)  # Reproduce el sonido del carro en un bucle infinito
         # Desplazamiento de la carretera    
         screen_size.blit(background, (0, scroll))
         screen_size.blit(background, (0, scroll - background.get_height()))  # Copia desplazada
@@ -157,7 +161,7 @@ def main_juego():
             scroll = 0  # Restablece la posición cuando alcanza el tamaño de la imagen de fondo
         if aumento_vel <= 10:
             if tiempo % 700 == 0:
-                aumento_vel += 1
+                aumento_vel += 0.5
                 print("Velocidad de la carretera: ", aumento_vel)
 
          # Crea los enemigos
@@ -206,17 +210,29 @@ def main_juego():
         
         power_collision_list = pygame.sprite.spritecollide(player, power_sprites, True, pygame.sprite.collide_mask)
         for power in power_collision_list:
-            poder()
+            #detenemos la musica del movimiento del carro
+            sound_power_channel.play(sound_power)
+            settings.num_vidas += 1
 
         # Colisiones
         for enemy in enemy_sprites:
-            car_collision_list = pygame.sprite.spritecollide(player,enemy_sprites,False,pygame.sprite.collide_mask)
-            if car_collision_list:
-                """ for colliding_enemy in car_collision_list:
-                    colliding_enemy.colision_move(1) """ 
-                crash(True)
-            else:
-                crash(False)
+        # Si el jugador no está en un estado invulnerable
+            if not invulnerable:
+                car_collision_list = pygame.sprite.spritecollide(player, enemy_sprites, False, pygame.sprite.collide_mask)
+                if car_collision_list:
+                    for colliding_enemy in car_collision_list:
+                        colliding_enemy.colision_move(1)
+                    crash(True)
+                    invulnerable = True  # Activar el estado de invulnerabilidad
+                    invulnerable_timer = 0  # Reiniciar el temporizador
+                else:
+                    crash(False)    
+        # Actualizar el temporizador de invulnerabilidad
+        if invulnerable:
+            invulnerable_timer += 1
+            if invulnerable_timer >= INVULNERABLE_DURATION:
+                invulnerable = False  # Desactivar la invulnerabilidad después de la duración especificada
+    
 
         # Dibuja los sprites
         all_sprites.draw(screen_size)
