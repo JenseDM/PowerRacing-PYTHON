@@ -218,7 +218,8 @@ def main_juego():
         for power in power_collision_list:
             #detenemos la musica del movimiento del carro
             sound_power_channel.play(sound_power)
-            settings.num_vidas += 1
+            if settings.num_vidas-collision_count < 3:
+                settings.num_vidas += 1
 
         # Colisiones
         for enemy in enemy_sprites:

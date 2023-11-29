@@ -19,6 +19,6 @@ class Settings:
         self.carril_4 = 535
         self.carril_5 = 375
         self.carril_6 = 275
-        self.num_vidas = 5  #numero de vidas
+        self.num_vidas = 3  #numero de vidas
         self.time_enemy = 40 #tiempo de aparicion de enemigos
         self.time_power = 300 #tiempo de aparicion de poderes
