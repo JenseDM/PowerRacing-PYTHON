@@ -1,3 +1,9 @@
+'''
+Autores: 
+        Luisa Fernanda Ramirez Velazco - 1002861605
+        Jense David Martinez Tobón -1004685332   
+'''
+# Description: Carga de imagenes para el juego
 import pygame
 
 #JUGADOR PRINCIPAL

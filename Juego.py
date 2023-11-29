@@ -1,15 +1,22 @@
+'''
+Autores: 
+        Luisa Fernanda Ramirez Velazco - 1002861605
+        Jense David Martinez Tobón -1004685332   
+'''
+#Description: Archivo principal del juego, contiene la lógica del juego y la configuración de la pantalla
 import pygame
 import sys
 import random
 import pygame.mask
 import pygame.mixer
 from button import *
+
 pygame.init()
 
+#Cargamos las imagenes y configuramos la pantalla
 screen_size = pygame.display.set_mode([800, 500])
 pygame.display.set_caption("Power Racing")
 clock = pygame.time.Clock()
-
 background = pygame.image.load("./Img/Carretera.png").convert()
 background_width = background.get_width()
 fondo_gameOver = pygame.image.load("./Img/game_over.png")
@@ -37,10 +44,10 @@ def agregar_nombre():
     global Puntaje
     nombre_encontrado = False
     lineas_actualizadas = []
-    
+    # Abrir el archivo en modo lectura
     with open('usuario.txt', 'r') as file:
         lines = file.readlines()
-
+        # Recorrer cada línea del archivo
         for line in lines:
             parts = line.split(', ')
             nombre = parts[0]
@@ -53,7 +60,7 @@ def agregar_nombre():
     
     if not nombre_encontrado:
         lineas_actualizadas.append(f"{nombreJugador}, {Puntaje}")
-
+    # Abrir el archivo en modo escritura
     with open('usuario.txt', 'w') as file:
         file.write('\n'.join(lineas_actualizadas))  # Une todas las líneas con saltos de línea
 
@@ -143,6 +150,7 @@ def main_juego():
     invulnerable_timer = 0  # Temporizador para controlar la duración de la invulnerabilidad
     INVULNERABLE_DURATION = 30  # Duración en frames (0.5 segundos a 60 FPS)
     sound_car_channel.play(sound_car, loops=-1)  # Reproduce el sonido del carro en un bucle infinito
+    #Bucle principal del juego
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -151,8 +159,7 @@ def main_juego():
             player.process_event_car(event)
             
         player.move_car()
-        #sound_car_channel.play(sound_car, loops=-1)  # Reproduce el sonido del carro en un bucle infinito
-        # Desplazamiento de la carretera    
+       
         screen_size.blit(background, (0, scroll))
         screen_size.blit(background, (0, scroll - background.get_height()))  # Copia desplazada
         scroll += aumento_vel  # Velocidad de desplazamiento
@@ -164,7 +171,7 @@ def main_juego():
                 aumento_vel += 0.5
                 print("Velocidad de la carretera: ", aumento_vel)
 
-         # Crea los enemigos
+        # Crea los enemigos
         enemy_timer += 1
         if enemy_timer >= settings.time_enemy:
             enemy_timer = 0
@@ -227,6 +234,7 @@ def main_juego():
                     invulnerable_timer = 0  # Reiniciar el temporizador
                 else:
                     crash(False)    
+
         # Actualizar el temporizador de invulnerabilidad
         if invulnerable:
             invulnerable_timer += 1
@@ -242,11 +250,15 @@ def main_juego():
         screen_size.blit(reloj,(360,10))
         screen_size.blit(Texto1,(45,22))
         screen_size.blit(score,(650,10))
-        tiempo += 1 #Aumentamos enl tiempo con cada iteración
+        #Aumentamos enl tiempo con cada iteración
+        tiempo += 1 
         texto_tiempo = fuente.render( str(tiempo), False, white)   #creamos el texto del tiempo
         screen_size.blit(texto_tiempo, (410, 20)) #Mostramos el tiempo en pantalla
+
+        #Aumentamos el puntaje cada 2 segundos
         if tiempo % 50 == 0:
-            Puntaje += 1 #Aumentamos el puntaje cada 2 segundos
+            Puntaje += 1 
+        
         texto_puntaje = fuente.render(str(Puntaje), False, white)   #creamos el texto del puntaje
         screen_size.blit(texto_puntaje, (700, 20)) #Mostramos el puntaje en pantalla
         pygame.display.flip()
@@ -254,5 +266,3 @@ def main_juego():
 
     pygame.quit()
     sys.exit()
-
-#main_juego()

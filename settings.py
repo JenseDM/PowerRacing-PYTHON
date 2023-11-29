@@ -1,4 +1,9 @@
-#configuracion del juego
+'''
+Autores: 
+        Luisa Fernanda Ramirez Velazco - 1002861605
+        Jense David Martinez Tobón -1004685332   
+'''
+# Description: Clase que contiene la configuración del juego
 class Settings:
     def __init__(self):
         self.car_width = 50 #ancho del carro

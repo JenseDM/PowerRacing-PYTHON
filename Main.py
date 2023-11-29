@@ -1,3 +1,9 @@
+'''
+Autores: 
+        Luisa Fernanda Ramirez Velazco - 1002861605
+        Jense David Martinez Tobón -1004685332   
+'''
+# Description: Archivo principal del juego, contiene las funciones de las ventanas y el menú principal
 import pygame
 import sys
 from Juego import *
@@ -5,18 +11,19 @@ from button import *
 import pygame.mixer
 
 pygame.init()
+#Configuración de la ventana
 Ancho = 800
 Alto = 500
 size = (Ancho, Alto)
 pygame.display.set_caption("Power Racing")
 screen = pygame.display.set_mode(size)
 # Tamaño del ícono deseado
-icon_size = (64, 64)  # Puedes ajustar este tamaño a tu preferencia
+icon_size = (64, 64)  
 icono = pygame.image.load("./Img/icono.png")
 icon = pygame.transform.scale(icono, icon_size)
 pygame.display.set_icon(icon)
 clock = pygame.time.Clock()
-
+#Img y sonidos
 fondo_menu = pygame.image.load("./Img/Power Racing 2.png")
 fondo_user = pygame.image.load("./Img/user_main.png")
 fondo_score = pygame.image.load("./Img/score_main.png")
@@ -47,6 +54,7 @@ def menu_user():
     texto = ""
     button_menu_user = Button(305,350,200,53, pygame.image.load("Buttons/ok.png"),pygame.image.load("Buttons/ok_on.png"),main_juego, music_click.play)
     running = True
+    #Capturar nombre del usuario
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -70,7 +78,7 @@ def menu_user():
                     main_juego()
                 else:
                     texto += event.unicode
-
+        #Mostrar texto
         screen.fill((0, 0, 0))
         screen.blit(fondo_user, (0, 0))
         texto_superficie = fuente.render(texto, True, "white")
@@ -102,6 +110,7 @@ def menu_score():
     Button(248,440,200,53, pygame.image.load("Buttons/clear.png"),pygame.image.load("Buttons/clear_on.png"),borrar_nombres, music_click.play)
     ]
     running = True
+    #Ciclo principal de la ventana score
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -132,7 +141,8 @@ def menu_score():
         nombres = obtener_nombres()  # Obtener todos los nombres del archivo
         y_offset = 200  # Ajustar la posición vertical inicial
 
-        for line in nombres:    # Iterar sobre cada línea
+        #Iterar sobre cada línea del archivo
+        for line in nombres:   
             line = line.strip()  # Eliminar espacios en blanco y saltos de línea
             nombre, puntaje = line.split(",")  # Dividir la línea en nombre y puntaje
 
@@ -150,7 +160,8 @@ def menu_score():
 
             y_offset += 30  # Ajustar el espacio vertical entre nombres y puntajes
 
-        for button in buttons_score:    # Dibujar los botones
+        # Dibujar los botones
+        for button in buttons_score:    
             button.draw(screen)
         pygame.display.flip()
 
@@ -163,6 +174,8 @@ def menu_help():
     StartMusic(music_help)
     button_menu_help = Button(305,430,200,53, pygame.image.load("Buttons/back.png"),pygame.image.load("Buttons/back_on.png"),menu_principal, music_click.play)
     running = True
+
+    #Ciclo principal de la ventana help
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -182,7 +195,8 @@ def menu_help():
 
 #Ventana Principal
 def menu_principal():
-    StartMusic(music_menu)  #Reproducir musica
+    #Reproducir musica
+    StartMusic(music_menu)  
     list_buttons_principal = [
     Button(361,300,400,400, pygame.image.load("Buttons/auto.png"),pygame.image.load("Buttons/auto_on.png"),None, music_car.play),
     Button(130,15,563,70,pygame.image.load("Buttons/titulo.png"),pygame.image.load("Buttons/titulo_on.png"),None, None),
