@@ -132,7 +132,6 @@ def main_juego():
     music_click = pygame.mixer.Sound("./Sounds/buttonClick.mp3")
     all_sprites = pygame.sprite.Group()
     enemy_sprites = pygame.sprite.Group()
-    hueco_sprites = pygame.sprite.Group()
     power_sprites = pygame.sprite.Group()
     settings = Settings()
     player = Player()
@@ -159,7 +158,7 @@ def main_juego():
             player.process_event_car(event)
             
         player.move_car()
-       
+
         screen_size.blit(background, (0, scroll))
         screen_size.blit(background, (0, scroll - background.get_height()))  # Copia desplazada
         scroll += aumento_vel  # Velocidad de desplazamiento
